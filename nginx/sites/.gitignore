@@ -1,2 +1,3 @@
 *.conf
+!gigadb.conf
 !default.conf
