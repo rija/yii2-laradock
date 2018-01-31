@@ -294,7 +294,6 @@ services:
       build: ./postgres
       volumes:
         - ${DATA_SAVE_PATH}/postgres:/var/lib/postgresql
-        - ./postgres/load_data.sh:/docker-entrypoint-initdb.d/1-load_data.sh
         - ./postgres/gigadb_testdata.sql:/docker-entrypoint-initdb.d/gigadb_testdata.sql
       ports:
         - "${POSTGRES_PORT}:5432"
