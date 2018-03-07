@@ -56,6 +56,17 @@ CHANGE_SOURCE=false
 # Containers Customization
 ###########################################################
 
+### FILESERVER-POSTGRES ################################################################################################
+
+FILESERVER_POSTGRES_DB=gigadb
+FILESERVER_POSTGRES_USER=gigadb
+FILESERVER_POSTGRES_PASSWORD=vagrant
+FILESERVER_POSTGRES_PORT=5432
+
+### FILESERVER-VSFTPD ##################################################################################################
+
+FILESERVER_VSFTPD_PORT=21
+
 ### WORKSPACE ##########################################################################################################
 
 WORKSPACE_INSTALL_XDEBUG=false
