@@ -12,7 +12,7 @@ services:
       volumes_from:
         - applications
       ports:
-        - "${FILESERVER_POSTGRES_PORT}:5432"
+        - "${FILESERVER_POSTGRES_PORT}:5442"
       environment:
         - POSTGRES_DB=${FILESERVER_POSTGRES_DB}
         - POSTGRES_USER=${FILESERVER_POSTGRES_USER}
@@ -26,6 +26,10 @@ services:
       build: ./fileserver-vsftpd
       volumes:
         - ./fileserver-vsftpd/update_ftpusers.sh:/usr/sbin/update_ftpusers.sh
+        - ./fileserver-vsftpd/files/100006/readme.txt:/var/ftp/pub/10.5524/100001_101000/100006/readme.txt
+        - ./fileserver-vsftpd/files/100020/readme.txt:/var/ftp/pub/10.5524/100001_101000/100020/readme.txt
+        - ./fileserver-vsftpd/files/100094/CS-master.tar.gz:/var/ftp/pub/10.5524/100001_101000/100094/CS-master.tar.gz
+        - ./fileserver-vsftpd/files/100142/Diagram-ALL-FIELDS-Check-annotation.jpg:/var/ftp/pub/10.5524/100001_101000/100142/Diagram-ALL-FIELDS-Check-annotation.jpg
       volumes_from:
         - applications
         - workspace
