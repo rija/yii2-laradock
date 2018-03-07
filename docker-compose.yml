@@ -35,6 +35,11 @@ services:
         - workspace
       ports:
         - "21:21"
+        # For passive mode
+        - "21100:21100"
+        - "21101:21101"
+        - "21102:21102"
+        - "21103:21103"
       depends_on:
         - fileserver-postgres
         - workspace
