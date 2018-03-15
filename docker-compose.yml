@@ -153,7 +153,7 @@ services:
         - applications
       volumes:
         - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
-        - /opt/yii-1.1.16:/opt/yii-1.1.16
+        - ${YII_PATH}:${YII_PATH}
       expose:
         - "9000"
       depends_on:
@@ -163,6 +163,72 @@ services:
       environment:
         - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
       networks:
+        - backend
+
+### PostgreSQL Container ####################################
+
+    postgres:
+      build: ./postgres
+      volumes:
+        - ${DATA_SAVE_PATH}/postgres:/var/lib/postgresql
+        - ./postgres/gigadb_testdata.sql:/docker-entrypoint-initdb.d/gigadb_testdata.sql
+      ports:
+        - "${POSTGRES_PORT}:5432"
+      environment:
+        - POSTGRES_DB=${POSTGRES_DB}
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      networks:
+        - backend
+
+### NGINX Server Container ##################################
+
+    nginx:
+      build:
+        context: ./nginx
+        args:
+          - PHP_UPSTREAM_CONTAINER=${NGINX_PHP_UPSTREAM_CONTAINER}
+          - PHP_UPSTREAM_PORT=${NGINX_PHP_UPSTREAM_PORT}
+          - YII_PATH=${YII_PATH}
+          - MAILCHIMP_API_KEY=${MAILCHIMP_API_KEY}
+          - ANALYTICS_CLIENT_EMAIL=${ANALYTICS_CLIENT_EMAIL}
+          - ANALYTICS_CLIENT_ID=${ANALYTICS_CLIENT_ID}
+          - ANALYTICS_KEYFILE_PATH=${ANALYTICS_KEYFILE_PATH}
+          - HOME_URL=${HOME_URL}
+          - SERVER_EMAIL=${SERVER_EMAIL}
+          - RECAPTCHA_PUBLICKEY=${RECAPTCHA_PUBLICKEY}
+          - RECAPTCHA_PRIVATEKEY=${RECAPTCHA_PRIVATEKEY}
+          - GOOGLE_ANALYTICS_PROFILE=${GOOGLE_ANALYTICS_PROFILE}
+          - MDS_USERNAME=${MDS_USERNAME}
+          - MDS_PASSWORD=${MDS_PASSWORD}
+          - MDS_PREFIX=${MDS_PREFIX}
+          - FACEBOOK_APP_ID=${FACEBOOK_APP_ID}
+          - LINKEDIN_API_KEY=${LINKEDIN_API_KEY}
+          - LINKEDIN_SECRET_KEY=${LINKEDIN_SECRET_KEY}
+          - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+          - GOOGLE_SECRET=${GOOGLE_SECRET}
+          - TWITTER_KEY=${TWITTER_KEY}
+          - TWITTER_SECRET=${TWITTER_SECRET}
+          - ORCID_CLIENT_ID=${ORCID_CLIENT_ID}
+          - ORCID_CLIENT_SECRET=${ORCID_CLIENT_SECRET}
+          - FTP_CONNECTION_URL=${FTP_CONNECTION_URL}
+          - GIGADB_DATABASE=${GIGADB_DATABASE}
+          - GIGADB_HOST=${GIGADB_HOST}
+          - GIGADB_USER=${GIGADB_USER}
+          - GIGADB_PASSWORD=${GIGADB_PASSWORD}
+          - GIGADB_ES_PORT=${GIGADB_ES_PORT}
+      volumes_from:
+        - applications
+      volumes:
+        - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
+        - ${NGINX_SITES_PATH}:/etc/nginx/sites-available
+      ports:
+        - "${NGINX_HOST_HTTP_PORT}:80"
+        - "${NGINX_HOST_HTTPS_PORT}:443"
+      depends_on:
+        - php-fpm
+      networks:
+        - frontend
         - backend
 
 ### PHP Worker Container #####################################
@@ -180,29 +246,6 @@ services:
       extra_hosts:
         - "dockerhost:${DOCKER_HOST_IP}"
       networks:
-        - backend
-
-### NGINX Server Container ##################################
-
-    nginx:
-      build:
-        context: ./nginx
-        args:
-          - PHP_UPSTREAM_CONTAINER=${NGINX_PHP_UPSTREAM_CONTAINER}
-          - PHP_UPSTREAM_PORT=${NGINX_PHP_UPSTREAM_PORT}
-      volumes_from:
-        - applications
-      volumes:
-        - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
-        - ${NGINX_SITES_PATH}:/etc/nginx/sites-available
-        - /opt/yii-1.1.16:/opt/yii-1.1.16
-      ports:
-        - "${NGINX_HOST_HTTP_PORT}:80"
-        - "${NGINX_HOST_HTTPS_PORT}:443"
-      depends_on:
-        - php-fpm
-      networks:
-        - frontend
         - backend
 
 ### Blackfire Container #################################
@@ -339,22 +382,6 @@ services:
         - MYSQL_USER=${MARIADB_USER}
         - MYSQL_PASSWORD=${MARIADB_PASSWORD}
         - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
-      networks:
-        - backend
-
-### PostgreSQL Container ####################################
-
-    postgres:
-      build: ./postgres
-      volumes:
-        - ${DATA_SAVE_PATH}/postgres:/var/lib/postgresql
-        - ./postgres/gigadb_testdata.sql:/docker-entrypoint-initdb.d/gigadb_testdata.sql
-      ports:
-        - "${POSTGRES_PORT}:5432"
-      environment:
-        - POSTGRES_DB=${POSTGRES_DB}
-        - POSTGRES_USER=${POSTGRES_USER}
-        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       networks:
         - backend
 
@@ -553,7 +580,6 @@ services:
       networks:
         - frontend
         - backend
-
 
 ### ElasticSearch Container #################################
 
