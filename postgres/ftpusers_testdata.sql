@@ -1,3 +1,5 @@
+CREATE DATABASE ftpusers;
+\c ftpusers
 CREATE TABLE ftp_user (name VARCHAR(20), password VARCHAR(20));
 ALTER TABLE ftp_user OWNER TO gigadb;
 
