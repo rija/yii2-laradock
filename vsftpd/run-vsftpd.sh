@@ -77,6 +77,5 @@ else
     /usr/bin/ln -sf /dev/stdout $LOG_FILE
 fi
 
-# Run vsftpd:
-&>/dev/null /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
-
+# Start supervisord - this will in turn start vsftp and generatepreview
+&>/dev/null /config/bootstrap.sh

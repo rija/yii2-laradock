@@ -14,7 +14,8 @@ RUN yum install -y \
 	iproute \
 	postgresql \
 	crontabs \
-	bc
+	bc \
+	php
 
 ENV FTP_USER **String**
 ENV FTP_PASS **Random**
@@ -31,9 +32,29 @@ RUN chmod +x /usr/sbin/run-vsftpd.sh
 RUN mkdir -p /home/vsftpd/
 RUN chown -R ftp:ftp /home/vsftpd/
 
+# Install supervisord
+RUN \
+  rpm --rebuilddb && yum clean all && \
+  yum install -y epel-release && \
+  yum update -y && \
+  yum install -y \
+                  iproute \
+                  python-setuptools \
+                  hostname \
+                  inotify-tools \
+                  yum-utils \
+                  which \
+                  jq \
+                  rsync && \
+  yum clean all && \
+  easy_install supervisor
+
+# Add supervisord conf, bootstrap.sh files
+COPY container-files /
+
 VOLUME /home/vsftpd
 VOLUME /var/log/vsftpd
 
-EXPOSE 20 21
+EXPOSE 20 21 9111
 
 CMD ["/usr/sbin/run-vsftpd.sh"]

@@ -14,7 +14,7 @@ set -u
 PSQL=/usr/bin/psql
 
 DB_USER=gigadb
-DB_HOST=fileserver-postgres
+DB_HOST=postgres
 DB_NAME=ftpusers
 export PGPASSWORD=vagrant
 
