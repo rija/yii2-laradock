@@ -808,8 +808,6 @@ networks:
 ### Volumes Setup #############################################
 
 volumes:
-  fileserver-postgres:
-    driver: "local"
   vsftpd:
     driver: "local"
   mysql:
