@@ -6,3 +6,9 @@
 .docker-sync
 *-docker-compose.yml
 /jenkins/jenkins_home
+
+# MacOSX
+.DS_Store
+
+# Example FTP files
+vsftpd/files
