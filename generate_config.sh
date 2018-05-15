@@ -3,6 +3,21 @@
 # Generate config files for gigadb-website application using sed
 source /vagrant/yii2-laradock/.env
 
+cp /vagrant/chef/site-cookbooks/gigadb/templates/default/yii-aws.json.erb /vagrant/protected/config/aws.json
+sed -i "/<% aws = node\[:aws\] -%>/d" /vagrant/protected/config/aws.json \
+    && sed -i "s|<%= aws\[:aws_access_key_id\] %>|${AWS_ACCESS_KEY_ID}|g" /vagrant/protected/config/aws.json \
+    && sed -i "s|<%= aws\[:aws_secret_access_key\] %>|${AWS_SECRET_ACCESS_KEY}|g" /vagrant/protected/config/aws.json \
+    && sed -i "s|<%= aws\[:s3_bucket_for_file_bundles\] %>|${AWS_S3_BUCKET_FOR_FILE_BUNDLES}|g" /vagrant/protected/config/aws.json \
+    && sed -i "s|<%= aws\[:s3_bucket_for_file_previews\] %>|${AWS_S3_BUCKET_FOR_FILE_PREVIEWS}|g" /vagrant/protected/config/aws.json \
+    && sed -i "s|<%= aws\[:aws_default_region\] %>|${AWS_DEFAULT_REGION}|g" /vagrant/protected/config/aws.json
+
+cp /vagrant/chef/site-cookbooks/gigadb/templates/default/yii-console.php.erb /vagrant/protected/config/console.php
+sed -i "s|<%= node\[:gigadb\]\[:mfr\]\[:preview_server\] %>|${PREVIEW_SERVER_HOST}|g" /vagrant/protected/config/console.php \
+    && sed -i "s|<%= node\[:gigadb\]\[:ftp\]\[:connection_url\] %>|${FTP_CONNECTION_URL}|g" /vagrant/protected/config/console.php \
+    && sed -i "s|<%= node\[:gigadb\]\[:multidownload\]\[:download_host\] %>|${MULTIDOWNLOAD_SERVER_HOST}|g" /vagrant/protected/config/console.php \
+    && sed -i "s|<%= node\[:gigadb\]\[:redis\]\[:server\] %>|${REDIS_SERVER_HOST}|g" /vagrant/protected/config/console.php \
+    && sed -i "s|<%= node\[:gigadb\]\[:beanstalk\]\[:host\] %>|${BEANSTALK_SERVER_HOST}|g" /vagrant/protected/config/console.php
+
 cp /vagrant/chef/site-cookbooks/gigadb/templates/default/yii-index.php.erb /vagrant/index.php
 sed -i "/<% path = node\[:yii\]\[:path\] -%>/d" /vagrant/index.php \
     && sed -i "s|<%= path %>|${YII_PATH}|g" /vagrant/index.php
