@@ -21,27 +21,59 @@ services:
         - 8.8.8.8
         - 9.9.9.9
 
+### Redis Container #########################################
+
+    redis:
+      container_name: redis
+      build: ./redis
+      volumes:
+        - ${DATA_SAVE_PATH}/redis:/data
+      ports:
+        - "${REDIS_PORT}:6379"
+      networks:
+        - backend
+      dns:
+        - 8.8.8.8
+        - 9.9.9.9
+
+### Beanstalkd Container ####################################
+
+    beanstalkd:
+      container_name: beanstalkd
+      build: ./beanstalkd
+      ports:
+        - "${BEANSTALKD_HOST_PORT}:11300"
+      privileged: true
+      depends_on:
+        - php-fpm
+      networks:
+        - backend
+      dns:
+        - 8.8.8.8
+        - 9.9.9.9
+
 ### vsftpd Container #############################
 
     vsftpd:
       container_name: vsftpd
       build: ./vsftpd
       volumes:
+        - ../protected:/vagrant/protected
         - /opt/yii-1.1.16:/opt/yii-1.1.16
         - ./vsftpd/update_ftpusers.sh:/usr/sbin/update_ftpusers.sh
-        - ./vsftpd/files/10006:/var/ftp/pub/10.5524/100001_101000/10006
-        - ./vsftpd/files/10020:/var/ftp/pub/10.5524/100001_101000/10020
-        - ./vsftpd/files/10094:/var/ftp/pub/10.5524/100001_101000/10094
-        - ./vsftpd/files/10104:/var/ftp/pub/10.5524/100001_101000/10104
-        - ./vsftpd/files/10112:/var/ftp/pub/10.5524/100001_101000/10112
-        - ./vsftpd/files/10117:/var/ftp/pub/10.5524/100001_101000/10117
-        - ./vsftpd/files/10142:/var/ftp/pub/10.5524/100001_101000/10142
-        - ./vsftpd/files/10159:/var/ftp/pub/10.5524/100001_101000/10159
-        - ./vsftpd/files/10179:/var/ftp/pub/10.5524/100001_101000/10179
-        - ./vsftpd/files/10258:/var/ftp/pub/10.5524/100001_101000/10258
+        - ./vsftpd/files/100006:/var/ftp/pub/10.5524/100001_101000/100006
+        - ./vsftpd/files/100020:/var/ftp/pub/10.5524/100001_101000/100020
+        - ./vsftpd/files/100094:/var/ftp/pub/10.5524/100001_101000/100094
+        - ./vsftpd/files/100104:/var/ftp/pub/10.5524/100001_101000/100104
+        - ./vsftpd/files/100112:/var/ftp/pub/10.5524/100001_101000/100112
+        - ./vsftpd/files/100117:/var/ftp/pub/10.5524/100001_101000/100117
+        - ./vsftpd/files/100142:/var/ftp/pub/10.5524/100001_101000/100142
+        - ./vsftpd/files/100159:/var/ftp/pub/10.5524/100001_101000/100159
+        - ./vsftpd/files/100179:/var/ftp/pub/10.5524/100001_101000/100179
+        - ./vsftpd/files/100258:/var/ftp/pub/10.5524/100001_101000/100258
       volumes_from:
         - applications
-        - workspace
+        #- workspace
       ports:
         - "21:21"
         # For passive mode
@@ -187,8 +219,8 @@ services:
       build: ./postgres
       volumes:
         - ${DATA_SAVE_PATH}/postgres:/var/lib/postgresql
-        - ../sql/gigadb_testdata.sql:/docker-entrypoint-initdb.d/1-gigadb_testdata.sql
-        - ./ftpusers_testdata.sql:/docker-entrypoint-initdb.d/2-ftpusers_testdata.sql
+        - ./postgres/gigadb_testdata.sql:/docker-entrypoint-initdb.d/1-gigadb_testdata.sql
+        - ./postgres/ftpusers_testdata.sql:/docker-entrypoint-initdb.d/2-ftpusers_testdata.sql
       ports:
         - "${POSTGRES_PORT}:5432"
       environment:
@@ -243,37 +275,6 @@ services:
       ports:
         - "${NGINX_HOST_HTTP_PORT}:80"
         - "${NGINX_HOST_HTTPS_PORT}:443"
-      depends_on:
-        - php-fpm
-      networks:
-        - backend
-      dns:
-        - 8.8.8.8
-        - 9.9.9.9
-
-### Redis Container #########################################
-
-    redis:
-      container_name: redis
-      build: ./redis
-      volumes:
-        - ${DATA_SAVE_PATH}/redis:/data
-      ports:
-        - "${REDIS_PORT}:6379"
-      networks:
-        - backend
-      dns:
-        - 8.8.8.8
-        - 9.9.9.9
-
-### Beanstalkd Container ####################################
-
-    beanstalkd:
-      container_name: beanstalkd
-      build: ./beanstalkd
-      ports:
-        - "${BEANSTALKD_HOST_PORT}:11300"
-      privileged: true
       depends_on:
         - php-fpm
       networks:
