@@ -1,0 +1,74 @@
+# OS generated files
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+*.swp
+*~
+
+# R
+#######################
+.Rhistory
+
+# Python
+#######################
+*.py[cod]
+**/*.pyc
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+dist
+/build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+__pycache__
+.idea
+.hg
+.hgignore
+.konchrc
+.env
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# Sphinx
+docs/_build
+README.html
+
+# Player files
+player/files/*
+player/mfr_config_local.py
+player/static/mfr/*
+
+!.gitkeep
+
+.cache

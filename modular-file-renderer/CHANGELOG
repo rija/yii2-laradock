@@ -1,0 +1,222 @@
+*********
+ChangeLog
+*********
+
+0.21.0 (2017-04-07)
+===================
+- Feature: Turn on scrolling for the MFR iframe to support wide JASP files.
+- Fix: Fix rendering of Google Drawing (.gdraw) files by directing them to the image renderer
+rather than the unoconv renderer.
+
+0.20.1 (2017-03-02)
+===================
+- Fix: Cast OSF file size metadata to an int before comparing to our maximum supported file size
+limit.  Some providers return file size as a string instead of int.
+
+0.20.0 (2017-03-01)
+===================
+- The "(thanks, @johnetordoff!)" release
+- Feature: The tabular spreadsheet renderer now recognizes date fields as dates and will format
+them as such. (thanks, @johnetordoff!)
+- Feature: Don't even try to render tabular files larger than 100Mb. Neither the server nor the
+browser wants that. (thanks, @johnetordoff!)
+- Feature: Render a better error message when encountering a csv file with a single field larger
+than ~128kb.  The underlying library can't handle that, so it's polite to let the user know.
+(thanks, @johnetordoff!)
+- Feature: MFR will now render .m4v files using the <video> tag. (thanks, @johnetordoff!)
+- Fix: Improve tooltip language on 3d object-renderer. (thanks, @johnetordoff!)
+- Code: Start depending on upstream xlrd instead of our own fork. (thanks, @johnetordoff!)
+
+0.19.1 (2017-02-21)
+===================
+- Fix: explicitly depend on IPython to fix ipynb rendering.  nbconvert and nbformat have an
+undeclared dependency on it. (thanks, @johnetordoff!)
+
+0.19.0 (2017-02-02)
+===================
+- Feature: MFR errors are now categorized and have error-specific metadata added to then.  If Keen
+logging is enabled, the error metadata will be logged there for future investigation.
+- Fix: The 3D object renderer now imposes a maximum zoom-out limit, so objects can't be shrunk to
+infinitesimalness. (thanks, @johnetordoff!)
+- Fix: MFR docs are once again building on readthedocs.org! (thanks, @johnetordoff!)
+- Code: Update MFR to use invoke 0.13.0. If you have an existing checkout, you will need to
+upgrade invoke manually: pip install invoke==0.13.0 (thanks, @johnetordoff!)
+- Docs: MFR has been verified to work with python 3.5.3 and 3.6.0. From now on, the docs will
+mention which python versions MFR has been verfied to work on. (thanks, @johnetordoff!)
+
+0.18.3 (2017-01-11)
+===================
+- Fix: Increase max codepygments render size to 200kb from 64kb.
+
+0.18.2 (2017-01-04)
+===================
+- Happy New Year!
+- Fix: Be more ruthless about fixing setuptools breakage in Dockerfile. (thanks, @cwisecarver!)
+
+0.18.1 (2016-12-13)
+===================
+- Pin setuptools to v30.4.0 to avoid package-namespace-related breakage.
+
+0.18.0 (2016-10-31)
+===================
+- HALLOWEEN RELEASE!
+- Feature: Add configurable size limit to text renderer to avoid dumping 100s of MB of text into
+the user's browser. (thanks, @TomBaxter!)
+- Fix: Pad MFR 404 errors to >512 bytes.  IE discards 404 messages smaller than that and
+substitutes its own 404 page. (thanks, @alexschiller!)
+
+0.17.0 (2016-10-11)
+===================
+- Feature: WaterButler accepts configuration from the environment, overriding any file-based
+configuration.  This helps MFR integrate nicer in a docker-compose environment. (thanks, @icereval!)
+- Fix: Fix pdf presentation mode on Safari. (thanks, @darioncassel!)
+- Fix: Fix aiohttp crashing on gzipped HEAD requests.
+- Fix: Fix incorrect WB API usage metrics.
+- Code: Bump raven dependency to 5.27.0.
+
+0.16.0 (2016-09-13)
+===================
+- Feature: MFR now does .sav conversion via pspp-convert instead of rpy2.
+- Fix: Update ipython notebook renderer to use split-out nbconvert and nbformat libraries.
+
+0.15.0 (2016-08-25)
+===================
+- Feature: add analytics to MFR requests.  MFR now keeps track of requests, handlers, renderers,
+and exporters, with more to come!
+- Fix: Better error handling for a number of edge cases. (thanks, @TomBaxter!)
+- Docs: many fixes to doc build, layout, and formatting. (thanks, @TomBaxter!)
+- Docs: add overview of MFR architecture to docs
+
+0.14.0 (2016-06-24)
+===================
+- Feature: The Dockerfile now sets up unoconv for you.
+- Fix: Character encodings for text files are now detected with the chardet library.  Inspired
+by a file that was both valid ISO-8859-1 and UTF-16 at the same time.
+
+0.13.0 (2016-06-17)
+===================
+- Avoid an unnecessary lookup when MFR's OSF provider gets a WaterButler V1 url for
+downloading. (thanks, @pattisdr!)
+- Update the install docs to pin invoke to 0.11.1.
+
+0.12.3 (2016-06-13)
+===================
+- Pin some dependencies and update our travis config to avoid spurious build failures.
+
+0.12.2 (2016-06-13)
+===================
+- Add a Dockerfile to simplify running MFR in dev environments.
+- Pin invoke to v0.11.1.  Our tasks.py is incompatible with v0.13.
+
+0.12.1 (2016-05-31)
+===================
+- When an invalid provider is passed to MFR, HTML escape the url in the error message.
+
+0.12.0 (2016-05-24)
+===================
+- MFR now requires python-3.5!  Make sure to set the SERVER_DEBUG flag to false in your server
+config to avoid the hated "throw() takes 2 positional arguments but 4 were given" error.
+- Tabular files now sort numish columns numerically!  (thanks, @mfraezz!)
+- MFR correctly sets the Access-Control-Allow-Origin header when it receives a request with
+an Authorization header but no cookie. IOW it can now be used outside the OSF! (thanks,
+@samchrisinger!)
+- Text files now wrap on Safari and Chrome. (thanks, @zamattiac!)
+
+0.11.1 (2016-04-19)
+===================
+- Require admin to set a whitelist of permitted provider domains, to avoid spamming other sites
+with requests.
+
+0.11.0 (2016-04-08)
+===================
+- IPython notebooks are now styled and look **much** better. (thanks, @erinspace!)
+- The OSF (https://osf.io) has moved to Open Sans as the default font, so we shall do the same for
+Markdown, ReStructred Text, and IPython notebooks. (thanks, @mfraezz!)
+- COS is hiring! http://cos.io/jobs (thanks, @AndrewSallans!)
+- Update copyright date. (thanks, monotonic progression of time!)
+
+0.10.2 (2016-03-21)
+===================
+- Pin WaterButler version to v0.18, the last version using python-3.4.
+
+0.10.1 (2016-03-14)
+===================
+- Fix bug in text encoding detector that was causing utf-8 to always detect as cp-1252.
+
+0.10.0 (2016-02-11)
+===================
+- Markdown and ReStructuredText files are now rendered in their formatted
+display. (thanks, @TomBaxter!)
+- ...oh, and they're styled, too! (thanks, @erinspace!)
+- Update MFR install instructions. (thanks, @rafaeldelucena!)
+
+0.9.6 (2016-02-01)
+==================
+- A few helpful tips for the user when rendering 3D objects
+
+0.9.5 (2016-01-31)
+==================
+- Remove Sentry Ravent Client patch, latest version no longer requires
+patching
+
+0.9.3/4 (2016-01-30)
+==================
+- Updated Sentry Raven Client to send release w/ Tornado patch and tests
+
+0.9.2 (2016-01-30)
+==================
+- Fix to provide IE10 support for JSC3D
+
+0.9.1 (2016-01-30)
+==================
+- Fix to prevent JSC3D CTM Loader from removing download url query parameters
+
+0.9.0 (2016-01-30)
+==================
+- Support for 3D model file formats (.stl, .3ds, .ctm, .obj) via jsc3d,
+https://github.com/humu2009/jsc3d
+- Support for .scad (OpenSCAD) syntax highlighting
+
+0.8.4 (2016-01-27)
+==================
+- Exclude .ico files from image scaling
+
+0.8.3 (2016-01-26)
+==================
+- Support maximum dimensions for images
+- Images larger than maximum dimensions are scaled down
+
+0.8.2 (2015-11-13)
+==================
+- Remove invoke from requirements
+
+0.8.1 (2015-11-13)
+==================
+- Manually garbage collect exceptions to work around issue in python 3.4
+
+0.8.0 (2015-10-22)
+==================
+- Support word breaks in <pre> tags in Firefox.
+- Codepygments extension: remove dependency on bootstrap css; add minimal
+  styling to maintain look.
+
+0.7.1 (2015-10-09)
+==================
+- Unpin numpy to avoid error in pandas.
+
+0.7.0 (2015-10-08)
+==================
+- Add support for rendering JASP files
+- Add support for searching tabular renderers
+
+0.6.0 (2015-09-17)
+==================
+- Add support for cookie based authentication for pdfs and pdbs
+
+0.1.0 (2015-06-07)
+==================
+- service oriented architecture (SOA)
+- plugin system for providers (file resources)
+- plugin system for extensions (renderers and exporters)
+- embeddable rendering via iframe widget
+- initial unit tests
