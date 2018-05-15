@@ -17,6 +17,12 @@ PHP_VERSION=56
 
 PHP_INTERPRETER=php-fpm
 
+### mfr-server configuration #######################################################################################
+
+SERVER_CONFIG_ADDRESS=0.0.0.0
+SERVER_CONFIG_PROVIDER_NAME=http
+SERVER_CONFIG_ALLOWED_PROVIDER_DOMAINS=https://fpreviewstest.s3.amazonaws.com
+
 ### gigadb-website configuration #######################################################################################
 
 YII_PATH=/opt/yii-1.1.16
@@ -41,12 +47,29 @@ TWITTER_KEY=
 TWITTER_SECRET=
 ORCID_CLIENT_ID=
 ORCID_CLIENT_SECRET=
-FTP_CONNECTION_URL=ftp://anonymous:anonymous@10.1.1.33:21
+FTP_CONNECTION_URL=ftp://anonymous:anonymous@vsftpd:21
 GIGADB_DATABASE=gigadb
 GIGADB_HOST=postgres
 GIGADB_USER=gigadb
 GIGADB_PASSWORD=vagrant
 GIGADB_ES_PORT=
+
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_S3_BUCKET_FOR_FILE_BUNDLES=fbundlestest
+AWS_S3_BUCKET_FOR_FILE_PREVIEWS=fpreviewstest
+AWS_DEFAULT_REGION=ap-southeast-1
+
+### preview server configuration #######################################################################################
+
+PREVIEW_SERVER_HOST=mfr:7778
+
+MULTIDOWNLOAD_SERVER_HOST=10.1.1.33
+
+### queues-server configuration #######################################################################################
+
+REDIS_SERVER_HOST=redis
+BEANSTALK_SERVER_HOST=beanstalkd
 
 ### POSTGRES ###########################################################################################################
 
@@ -56,16 +79,9 @@ POSTGRES_PASSWORD=vagrant
 #POSTGRES_PORT=5432
 POSTGRES_PORT=5400
 
-### FILESERVER-POSTGRES ################################################################################################
+### VSFTPD ##################################################################################################
 
-FILESERVER_POSTGRES_DB=ftpusers
-FILESERVER_POSTGRES_USER=gigadb
-FILESERVER_POSTGRES_PASSWORD=vagrant
-FILESERVER_POSTGRES_PORT=5432
-
-### FILESERVER-VSFTPD ##################################################################################################
-
-FILESERVER_VSFTPD_PORT=21
+VSFTPD_PORT=21
 FTP_USER=chris
 FTP_PASS=gigadb
 
