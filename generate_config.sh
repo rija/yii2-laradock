@@ -55,9 +55,9 @@ sed -i "s|<%= node\[:gigadb\]\[:facebook\]\[:app_id\] %>|${FACEBOOK_APP_ID}|g" /
     && sed -i "s|<%= node\[:gigadb\]\[:orcid\]\[:client_id\] %>|${ORCID_CLIENT_ID}|g" /vagrant/protected/config/main.php \
     && sed -i "s|<%= node\[:gigadb\]\[:orcid\]\[:client_secret\] %>|${ORCID_CLIENT_SECRET}|g" /vagrant/protected/config/main.php \
     && sed -i "s|<%= node\[:gigadb\]\[:ftp\]\[:connection_url\] %>|${FTP_CONNECTION_URL}|g" /vagrant/protected/config/main.php \
-    && sed -i "s|<%= node\[:redis_server\]\[:host\] %>|${REDIS_SERVER_HOST}|g" /vagrant/protected/config/main.php \
-    && sed -i "s|<%= node\[:beanstalk_server\]\[:host\] %>|${BEANSTALK_SERVER_HOST}|g" /vagrant/protected/config/main.php \
-    && sed -i "s|<%= node[:gigadb][:mfr][:preview_server] %>|${PREVIEW_SERVER_HOST}|g" /vagrant/protected/config/main.php
+    && sed -i "s|<%= node\[:gigadb\]\[:redis\]\[:server\] %>|${REDIS_SERVER_HOST}|g" /vagrant/protected/config/main.php \
+    && sed -i "s|<%= node\[:gigadb\]\[:beanstalk\]\[:host\] %>|${BEANSTALK_SERVER_HOST}|g" /vagrant/protected/config/main.php \
+    && sed -i "s|<%= node\[:gigadb\]\[:mfr\]\[:preview_server\] %>|${PREVIEW_SERVER_HOST}|g" /vagrant/protected/config/main.php
 
 cp /vagrant/chef/site-cookbooks/gigadb/templates/default/yii-db.json.erb /vagrant/protected/config/db.json
 sed -i "/<% db = node\[:gigadb\]\[:db\] -%>/d" /vagrant/protected/config/db.json \

@@ -17,7 +17,7 @@ PHP_VERSION=56
 
 PHP_INTERPRETER=php-fpm
 
-### mfr-server configuration #######################################################################################
+### mfr-server configuration ###########################################################################################
 
 SERVER_CONFIG_ADDRESS=0.0.0.0
 SERVER_CONFIG_PROVIDER_NAME=http
@@ -47,12 +47,13 @@ TWITTER_KEY=
 TWITTER_SECRET=
 ORCID_CLIENT_ID=
 ORCID_CLIENT_SECRET=
-FTP_CONNECTION_URL=ftp://anonymous:anonymous@vsftpd:21
 GIGADB_DATABASE=gigadb
 GIGADB_HOST=postgres
 GIGADB_USER=gigadb
 GIGADB_PASSWORD=vagrant
 GIGADB_ES_PORT=
+
+### AWS configuration ##################################################################################################
 
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
@@ -63,13 +64,16 @@ AWS_DEFAULT_REGION=ap-southeast-1
 ### preview server configuration #######################################################################################
 
 PREVIEW_SERVER_HOST=mfr:7778
+FTP_CONNECTION_URL=ftp://anonymous:anonymous@vsftpd:21
 
-MULTIDOWNLOAD_SERVER_HOST=10.1.1.33
-
-### queues-server configuration #######################################################################################
+### queues-server configuration ########################################################################################
 
 REDIS_SERVER_HOST=redis
 BEANSTALK_SERVER_HOST=beanstalkd
+
+### multidownload server configuration #################################################################################
+
+MULTIDOWNLOAD_SERVER_HOST=10.1.1.33
 
 ### POSTGRES ###########################################################################################################
 
