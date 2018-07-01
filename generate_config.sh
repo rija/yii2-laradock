@@ -6,7 +6,7 @@ echo "Current working directory: $PWD"
 if ! [ -f  ./.env ];then
     echo "ERROR: There is no .env file in this directory. Cannot run the configuration."
     echo "Please, switch to a directory with an .env file before running the configuration"
-    exit(1)
+    exit 1
 fi
 source "./.env"
 echo "Yii path: ${YII_PATH}"
