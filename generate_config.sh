@@ -2,11 +2,20 @@
 
 # read env variables in same directory. 
 # They are shared by both this script and Docker compose files, so .env has to stay in yii2-laradock with this script.
+echo "Current working directory: $PWD"
+if ! [ -f  ./.env ];then
+    echo "ERROR: There is no .env file in this directory. Cannot run the configuration."
+    echo "Please, switch to a directory with an .env file before running the configuration"
+    exit(1)
+fi
 source "./.env"
 echo "Yii path: ${YII_PATH}"
 echo "Application path: ${APPLICATION}"
-echo "COMPOSER_PROJECT_NAME: ${COMPOSER_PROJECT_NAME}"
-
+echo "COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME}"
+if ! [ -f  docker-compose.yml ];then
+    echo "INFO: There is no docker-compose.yml file in this directory."
+    echo "You must use the '-f' option on docker-compose and specify the path to a valid docker-compose file."
+fi
 
 # do the stuff that vagrant would normally do. Even if vagrant is used, doing this stuff regardless is still ok.
 mkdir -p ${APPLICATION}/protected/runtime
