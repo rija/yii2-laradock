@@ -28,7 +28,7 @@ DATA_SAVE_PATH=~/.laradock/data
 # Change the separator from : to ; on Windows
 
 COMPOSE_PATH_SEPARATOR=:
-COMPOSE_FILE=docker-compose.yml:docker-compose.dev.yml
+COMPOSE_FILE=${LARADOCK_PATH}/docker-compose.yml:${LARADOCK_PATH}/docker-compose.dev.yml
 
 ### PHP Version ########################################################################################################
 # Select a PHP version of the Workspace and PHP-FPM containers (Does not apply to HHVM). Accepted values: 71 - 70 - 56

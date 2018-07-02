@@ -21,7 +21,7 @@ echo "Laradock path: ${LARADOCK_PATH}"
 echo "Yii path: ${YII_PATH}"
 echo "Application path: ${APPLICATION}"
 echo "COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME}"
-echo "COMPOSE_PROJECT_FILE: ${COMPOSE_PROJECT_FILE}"
+echo "COMPOSE_FILE: ${COMPOSE_FILE}"
 
 echo " * ---------------------------------------------- *"
 
