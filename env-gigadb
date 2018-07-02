@@ -13,6 +13,19 @@ COMPOSE_PROJECT_NAME=gigadb
 
 APPLICATION=../
 
+### Data Path ##########################################################################################################
+# Choose storage path on your machine. For all storage systems.
+
+DATA_SAVE_PATH=~/.laradock/data
+
+### Docker compose files ###############################################################################################
+# Select which docker-compose files to include.
+# If using docker-sync. Set the value to: docker-compose.yml:docker-compose.dev.yml:docker-compose.sync.yml
+# Change the separator from : to ; on Windows
+
+COMPOSE_PATH_SEPARATOR=:
+COMPOSE_FILE=docker-compose.yml:docker-compose.dev.yml
+
 ### PHP Version ########################################################################################################
 # Select a PHP version of the Workspace and PHP-FPM containers (Does not apply to HHVM). Accepted values: 71 - 70 - 56
 
@@ -131,18 +144,6 @@ PHP_FPM_INSTALL_IMAGE_OPTIMIZERS=false
 PHP_FPM_INSTALL_IMAGEMAGICK=false
 PHP_FPM_INSTALL_PG_CLIENT=true
 
-### Data Path ##########################################################################################################
-# Choose storage path on your machine. For all storage systems.
-
-DATA_SAVE_PATH=~/.laradock/data
-
-### Docker compose files ###############################################################################################
-# Select which docker-compose files to include.
-# If using docker-sync. Set the value to: docker-compose.yml:docker-compose.dev.yml:docker-compose.sync.yml
-# Change the separator from : to ; on Windows
-
-COMPOSE_PATH_SEPARATOR=:
-COMPOSE_FILE=docker-compose.yml:docker-compose.dev.yml
 
 ### Docker Host IP #####################################################################################################
 # Enter your Docker Host IP (will be appended to /etc/hosts). Default is `10.0.75.1`
