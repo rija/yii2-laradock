@@ -3,7 +3,7 @@
 # bail out upon error
 set -e
 
-echo " * ---------------------------------------------- *"
+echo "* ---------------------------------------------- *"
 
 # read env variables in same directory, from a file called .env.
 # They are shared by both this script and Docker compose files.
@@ -18,12 +18,17 @@ source "./.env"
 
 # for diagnostics purpose, print the value for the paths related variables need for successful configuration
 echo "HOME_URL: ${HOME_URL}"
+echo "NGINX_HOST_HTTP_PORT: ${NGINX_HOST_HTTP_PORT}"
+echo "NGINX_HOST_HTTPS_PORT: ${NGINX_HOST_HTTPS_PORT}"
+echo "POSTGRES_PORT: ${POSTGRES_PORT}"
+echo "WORKSPACE_SSH_PORT: ${WORKSPACE_SSH_PORT}"
+
 echo "Yii path: ${YII_PATH}"
 echo "Application path: ${APPLICATION}"
 echo "COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME}"
 echo "COMPOSE_FILE: ${COMPOSE_FILE}"
 
-echo " * ---------------------------------------------- *"
+echo "* ---------------------------------------------- *"
 
 # do the stuff that vagrant would normally do. Even if vagrant is used, doing this stuff regardless is still ok.
 mkdir -p ${APPLICATION}/protected/runtime
@@ -140,7 +145,10 @@ if ! [ $files_count -eq 11 ]; then
 fi
 
 
-echo " * ---------------------------------------------- *"
+echo "* ---------------------------------------------- *"
 echo "done."
-echo " * ---------------------------------------------- *"
+echo "* ---------------------------------------------- *"
+echo "To instantiate your website, you can now type:"
+echo "docker-compose up -d nginx php-fpm postgres workspace"
+echo "* ---------------------------------------------- *"
 exit 0
