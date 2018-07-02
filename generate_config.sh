@@ -36,7 +36,7 @@ chmod 777 ${APPLICATION}/images/tempcaptcha
 # Generate nginx site config
 
 mkdir -p ${DATA_SAVE_PATH}/nginx/sites-available
-sed "s|192.168.42.10|${HOME_URL}|" ${NGINX_SITES_PATH}/gigadb.conf > ${DATA_SAVE_PATH}/nginx/sites-available/${COMPOSE_PROJECT_NAME}.conf
+sed "s|192.168.42.10|${HOME_URL}|;s|80|${NGINX_HOST_HTTP_PORT}|g" ${NGINX_SITES_PATH}/gigadb.conf > ${DATA_SAVE_PATH}/nginx/sites-available/${COMPOSE_PROJECT_NAME}.conf
 
 # Generate config files for gigadb-website application using sed
 
@@ -140,5 +140,7 @@ if ! [ $files_count -eq 11 ]; then
 fi
 
 
+echo " * ---------------------------------------------- *"
 echo "done."
+echo " * ---------------------------------------------- *"
 exit 0
