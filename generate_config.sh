@@ -17,6 +17,7 @@ fi
 source "./.env"
 
 # for diagnostics purpose, print the value for the paths related variables need for successful configuration
+echo "HOME_URL: ${HOME_URL}"
 echo "Yii path: ${YII_PATH}"
 echo "Application path: ${APPLICATION}"
 echo "COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME}"
