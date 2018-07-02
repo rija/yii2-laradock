@@ -4,6 +4,6 @@ services:
 
 ### Applications Code Container #############################
 
-    applications:
+    app:
       volumes:
         - ${APPLICATION}:/var/www
