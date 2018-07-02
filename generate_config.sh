@@ -25,6 +25,11 @@ chmod 777 ${APPLICATION}/protected/runtime
 chmod 777 ${APPLICATION}/assets
 chmod 777 ${APPLICATION}/images/tempcaptcha
 
+# Generate nginx site config
+
+mkdir -p ${DATA_SAVE_PATH}/nginx/sites-available
+sed "s|192.168.42.10|${HOME_URL}" ${NGINX_SITES_PATH}/gigadb.conf > ${DATA_SAVE_PATH}/nginx/sites-available/${APPLICATION}.conf
+
 # Generate config files for gigadb-website application using sed
 
 cp ${APPLICATION}/chef/site-cookbooks/gigadb/templates/default/yii-aws.json.erb ${APPLICATION}/protected/config/aws.json \
