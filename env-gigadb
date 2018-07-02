@@ -2,9 +2,13 @@
 # General Setup
 ###########################################################
 
+### Laradock path  ######################################################################################################
+# the path of laradock directory (default to current directory)
+
+LARADOCK_PATH=./
+
 ### Application name  ###################################################################################################
-# It's docker compose special environment variable. When set, its used to prefix the name of the containers instantiated
-# by compose. It doesn't have the problems that container_name: compose directive has.
+# It's a docker environment variable. If set, it's used to prefix the name of the containers instantiated by compose.
 
 COMPOSE_PROJECT_NAME=gigadb
 
@@ -113,8 +117,8 @@ FTP_PASS=gigadb
 
 NGINX_HOST_HTTP_PORT=80
 NGINX_HOST_HTTPS_PORT=443
-NGINX_HOST_LOG_PATH=./logs/nginx/
-NGINX_SITES_PATH=./nginx/sites/
+NGINX_HOST_LOG_PATH=${LARADOCK_PATH}/logs/nginx/
+NGINX_SITES_PATH=${LARADOCK_PATH}/nginx/sites/
 NGINX_PHP_UPSTREAM_CONTAINER=php-fpm
 NGINX_PHP_UPSTREAM_PORT=9000
 
@@ -219,8 +223,8 @@ PHP_WORKER_INSTALL_PGSQL=false
 
 APACHE_HOST_HTTP_PORT=80
 APACHE_HOST_HTTPS_PORT=443
-APACHE_HOST_LOG_PATH=./logs/apache2
-APACHE_SITES_PATH=./apache2/sites
+APACHE_HOST_LOG_PATH=${LARADOCK_PATH}/logs/apache2
+APACHE_SITES_PATH=${LARADOCK_PATH}/apache2/sites
 APACHE_PHP_UPSTREAM_CONTAINER=php-fpm
 APACHE_PHP_UPSTREAM_PORT=9000
 APACHE_PHP_UPSTREAM_TIMEOUT=60
@@ -233,7 +237,7 @@ MYSQL_USER=default
 MYSQL_PASSWORD=secret
 MYSQL_PORT=3306
 MYSQL_ROOT_PASSWORD=root
-MYSQL_ENTRYPOINT_INITDB=./mysql/docker-entrypoint-initdb.d
+MYSQL_ENTRYPOINT_INITDB=${LARADOCK_PATH}/mysql/docker-entrypoint-initdb.d
 
 ### REDIS ##############################################################################################################
 
@@ -246,7 +250,7 @@ PERCONA_USER=homestead
 PERCONA_PASSWORD=secret
 PERCONA_PORT=3306
 PERCONA_ROOT_PASSWORD=root
-PERCONA_ENTRYPOINT_INITDB=./percona/docker-entrypoint-initdb.d
+PERCONA_ENTRYPOINT_INITDB=${LARADOCK_PATH}/percona/docker-entrypoint-initdb.d
 
 ### MSSQL ##############################################################################################################
 
@@ -261,7 +265,7 @@ MARIADB_USER=default
 MARIADB_PASSWORD=secret
 MARIADB_PORT=3306
 MARIADB_ROOT_PASSWORD=root
-MARIADB_ENTRYPOINT_INITDB=./mariadb/docker-entrypoint-initdb.d
+MARIADB_ENTRYPOINT_INITDB=${LARADOCK_PATH}/mariadb/docker-entrypoint-initdb.d
 
 ### RABBITMQ ###########################################################################################################
 
@@ -286,7 +290,7 @@ MEMCACHED_HOST_PORT=11211
 
 ### BEANSTALKD CONSOLE #################################################################################################
 
-BEANSTALKD_CONSOLE_BUILD_PATH=./beanstalkd-console
+BEANSTALKD_CONSOLE_BUILD_PATH=${LARADOCK_PATH}/beanstalkd-console
 BEANSTALKD_CONSOLE_CONTAINER_NAME=beanstalkd-console
 BEANSTALKD_CONSOLE_HOST_PORT=2080
 
@@ -354,7 +358,7 @@ HAPROXY_HOST_HTTP_PORT=8085
 
 JENKINS_HOST_HTTP_PORT=8090
 JENKINS_HOST_SLAVE_AGENT_PORT=50000
-JENKINS_HOME=./jenkins/jenkins_home
+JENKINS_HOME=${LARADOCK_PATH}/jenkins/jenkins_home
 
 ### GRAFANA ############################################################################################################
 
@@ -390,8 +394,8 @@ MONGODB_PORT=27017
 
 CADDY_HOST_HTTP_PORT=80
 CADDY_HOST_HTTPS_PORT=443
-CADDY_HOST_LOG_PATH=./logs/caddy
-CADDY_CUSTOM_CADDYFILE=./caddy/Caddyfile
+CADDY_HOST_LOG_PATH=${LARADOCK_PATH}/logs/caddy
+CADDY_CUSTOM_CADDYFILE=${LARADOCK_PATH}/caddy/Caddyfile
 
 ### LARAVEL ECHO SERVER ################################################################################################
 
