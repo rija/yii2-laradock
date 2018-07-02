@@ -1,7 +1,13 @@
 #!/bin/bash
 
-# read env variables in same directory. 
-# They are shared by both this script and Docker compose files, so .env has to stay in yii2-laradock with this script.
+# bail out upon error
+set -e
+
+echo " * ---------------------------------------------- *"
+
+# read env variables in same directory, from a file called .env.
+# They are shared by both this script and Docker compose files.
+
 echo "Current working directory: $PWD"
 if ! [ -f  ./.env ];then
     echo "ERROR: There is no .env file in this directory. Cannot run the configuration."
@@ -9,13 +15,15 @@ if ! [ -f  ./.env ];then
     exit 1
 fi
 source "./.env"
+
+# for diagnostics purpose, print the value for the paths related variables need for successful configuration
+echo "Laradock path: ${LARADOCK_PATH}"
 echo "Yii path: ${YII_PATH}"
 echo "Application path: ${APPLICATION}"
 echo "COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME}"
-if ! [ -f  docker-compose.yml ];then
-    echo "INFO: There is no docker-compose.yml file in this directory."
-    echo "You must use the '-f' option on docker-compose and specify the path to a valid docker-compose file."
-fi
+echo "COMPOSE_PROJECT_FILE: ${COMPOSE_PROJECT_FILE}"
+
+echo " * ---------------------------------------------- *"
 
 # do the stuff that vagrant would normally do. Even if vagrant is used, doing this stuff regardless is still ok.
 mkdir -p ${APPLICATION}/protected/runtime
@@ -126,7 +134,10 @@ mkdir -p ${APPLICATION}/vsftpd/files
 if ! [ -f ${APPLICATION}/vsftpd/files/ftpexamples4.tar.gz ]; then
   curl -o ${APPLICATION}/vsftpd/files/ftpexamples4.tar.gz https://s3-ap-southeast-1.amazonaws.com/gigadb-ftp-sample-data/ftpexamples4.tar.gz
 fi
-files_count=$(ls -1 ${APPLICATION}/yii2-laradock/vsftpd/files | wc -l)
+files_count=$(ls -1 ${APPLICATION}/vsftpd/files | wc -l)
 if ! [ $files_count -eq 11 ]; then
   tar -xzvf ${APPLICATION}/vsftpd/files/ftpexamples4.tar.gz -C ${APPLICATION}/vsftpd/files
 fi
+
+
+exit 0
