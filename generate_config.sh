@@ -140,4 +140,5 @@ if ! [ $files_count -eq 11 ]; then
 fi
 
 
+echo "done."
 exit 0
