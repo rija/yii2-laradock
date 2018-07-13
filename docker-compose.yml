@@ -55,7 +55,7 @@ services:
       build: ./vsftpd
       volumes:
         - ${APPLICATION}/protected:/vagrant/protected
-        - ${YII_PATH}:${YII_PATH}
+        - ${DATA_SAVE_PATH}/yii:${YII_PATH}
         - ./vsftpd/update_ftpusers.sh:/usr/sbin/update_ftpusers.sh
         - ./vsftpd/files/100006:/var/ftp/pub/10.5524/100001_101000/100006
         - ./vsftpd/files/100020:/var/ftp/pub/10.5524/100001_101000/100020
@@ -193,7 +193,7 @@ services:
         - app
       volumes:
         - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
-        - ${YII_PATH}:${YII_PATH}
+        - ${DATA_SAVE_PATH}/yii:${YII_PATH}
       expose:
         - "9000"
       depends_on:
@@ -211,8 +211,8 @@ services:
       build: ./postgres
       volumes:
         - ${DATA_SAVE_PATH}/postgres:/var/lib/postgresql
-        - ${SQL_DIRECTORY}/gigadb_testdata.sql:/docker-entrypoint-initdb.d/1-gigadb_testdata.sql
-        - ${SQL_DIRECTORY}/ftpusers_testdata.sql:/docker-entrypoint-initdb.d/2-ftpusers_testdata.sql
+        - ${APPLICATION}/sql/gigadb_testdata.sql:/docker-entrypoint-initdb.d/1-gigadb_testdata.sql
+        - ${APPLICATION}/sql/ftpusers_testdata.sql:/docker-entrypoint-initdb.d/2-ftpusers_testdata.sql
       ports:
         - "${POSTGRES_PORT}:5432"
       environment:

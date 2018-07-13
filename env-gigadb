@@ -44,7 +44,8 @@ SERVER_CONFIG_ALLOWED_PROVIDER_DOMAINS=https://fpreviewstest.s3.amazonaws.com
 
 ### gigadb-website configuration #######################################################################################
 
-YII_PATH=/opt/yii-1.1.16
+YII_VERSION=1.1.16
+YII_PATH=/opt/yii-1.1
 MAILCHIMP_API_KEY=
 ANALYTICS_CLIENT_EMAIL=
 ANALYTICS_CLIENT_ID=
@@ -101,7 +102,6 @@ POSTGRES_USER=gigadb
 POSTGRES_PASSWORD=vagrant
 #POSTGRES_PORT=5432
 POSTGRES_PORT=5400
-SQL_DIRECTORY=${APPLICATION}/sql
 
 ### VSFTPD ##################################################################################################
 
