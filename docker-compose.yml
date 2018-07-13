@@ -81,7 +81,7 @@ services:
         - "9111:9111"
       depends_on:
         - postgres
-        - workspace
+        # - workspace
         - app
       environment:
         - VSFTPD_PORT=${VSFTPD_PORT}
@@ -211,8 +211,6 @@ services:
         - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/yii:${YII_PATH}
       expose:
         - "9000"
-      depends_on:
-        - workspace
       extra_hosts:
         - "dockerhost:${DOCKER_HOST_IP}"
       environment:
