@@ -106,6 +106,9 @@ services:
         - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/yii:${YII_PATH}
       depends_on:
         - app
+        - nginx
+        - php-fpm
+        - postgres
       command: /var/www/protected/yiic lesscompiler
 
 ### Applications Code Container #############################

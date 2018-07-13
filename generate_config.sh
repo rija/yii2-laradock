@@ -206,6 +206,6 @@ echo "* ---------------------------------------------- *"
 echo "done."
 echo "* ---------------------------------------------- *"
 echo "To instantiate your website, you can now type the command below and it will be launched at http://${HOME_URL}:${NGINX_HOST_HTTP_PORT}"
-echo "docker-compose up -d nginx php-fpm postgres workspace init"
+echo "docker-compose up -d init"
 echo "* ---------------------------------------------- *"
 exit 0
