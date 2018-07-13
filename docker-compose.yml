@@ -96,6 +96,18 @@ services:
         - 8.8.8.8
         - 9.9.9.9
 
+### Applications Code Initializer #############################
+
+    init:
+      image: php:5.6-cli
+      volumes_from:
+        - app
+      volumes:
+        - ${DATA_SAVE_PATH}/yii:${YII_PATH}
+      depends_on:
+        - app
+      command: /var/www/protected/yiic lesscompiler
+
 ### Applications Code Container #############################
 
     app:
