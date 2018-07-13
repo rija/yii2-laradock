@@ -2,9 +2,16 @@
 
 # bail out upon error
 # set -e
+# display the lines of this script as they are executed
 # set -x
 
+# Print directory of this script. We will need it to find nginx config
+
+THIS_SCRIPT_DIR=`dirname "$BASH_SOURCE"`
+echo "Running ${THIS_SCRIPT_DIR}/generate_config.sh"
+
 echo "* ---------------------------------------------- *"
+
 
 # read env variables in same directory, from a file called .env.
 # They are shared by both this script and Docker compose files.
@@ -47,8 +54,8 @@ chmod 777 ${APPLICATION}/images/tempcaptcha
 
 # Generate nginx site config
 
-mkdir -p ${DATA_SAVE_PATH}/nginx/sites-available
-sed "s|192.168.42.10|${HOME_URL}|" ${NGINX_SITES_PATH}/gigadb.conf > ${DATA_SAVE_PATH}/nginx/sites-available/${COMPOSE_PROJECT_NAME}.conf
+mkdir -p ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/nginx/sites-available
+sed "s|192.168.42.10|${HOME_URL}|" $THIS_SCRIPT_DIR/nginx/sites/gigadb.conf > ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/nginx/sites-available/${COMPOSE_PROJECT_NAME}.conf
 
 # Generate config files for gigadb-website application using sed
 
@@ -143,7 +150,7 @@ cp $SOURCE $TARGET \
     && sed "s|<%= db\[:database\] %>|${GIGADB_DATABASE}|g" $TARGET > $TARGET.new && mv $TARGET $TARGET.bak && mv $TARGET.new $TARGET \
     && sed "s|<%= db\[:host\] %>|${GIGADB_HOST}|g" $TARGET > $TARGET.new && mv $TARGET $TARGET.bak && mv $TARGET.new $TARGET \
     && sed "s|<%= db\[:user\] %>|${GIGADB_USER}|g" $TARGET > $TARGET.new && mv $TARGET $TARGET.bak && mv $TARGET.new $TARGET \
-    && sed "s|<%= db\[:password\] %>|${GIGADB_PASSWORD}|g" $$TARGET > $TARGET.new && mv $TARGET $TARGET.bak && mv $TARGET.new $TARGET \
+    && sed "s|<%= db\[:password\] %>|${GIGADB_PASSWORD}|g" $TARGET > $TARGET.new && mv $TARGET $TARGET.bak && mv $TARGET.new $TARGET \
     && rm $TARGET.bak
 
 SOURCE=${APPLICATION}/chef/site-cookbooks/gigadb/templates/default/es.json.erb
@@ -173,7 +180,7 @@ if ! [ -f  yiirelease-${YII_VERSION}.tar.gz ];then
 fi
 
 # Install Yii of version $YII_VERSION in the ~/.laradock/data directory for persistent container data, if not yet installed
-YII_FRAMEWORK="${DATA_SAVE_PATH}/yii"
+YII_FRAMEWORK="${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/yii"
 if ! [ -f "$YII_FRAMEWORK/version-${YII_VERSION}" ]; then
     echo "Installing the Yii framework ${YII_VERSION} to $YII_FRAMEWORK"
     mkdir -p $YII_FRAMEWORK
@@ -198,7 +205,7 @@ fi
 echo "* ---------------------------------------------- *"
 echo "done."
 echo "* ---------------------------------------------- *"
-echo "To instantiate your website, you can now type:"
+echo "To instantiate your website, you can now type the command below and it will be launched at http://${HOME_URL}:${NGINX_HOST_HTTP_PORT}"
 echo "docker-compose up -d nginx php-fpm postgres workspace init"
 echo "* ---------------------------------------------- *"
 exit 0

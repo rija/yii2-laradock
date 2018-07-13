@@ -25,7 +25,7 @@ services:
     redis:
       build: ./redis
       volumes:
-        - ${DATA_SAVE_PATH}/redis:/data
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/redis:/data
       ports:
         - "${REDIS_PORT}:6379"
       networks:
@@ -55,7 +55,7 @@ services:
       build: ./vsftpd
       volumes:
         - ${APPLICATION}/protected:/vagrant/protected
-        - ${DATA_SAVE_PATH}/yii:${YII_PATH}
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/yii:${YII_PATH}
         - ./vsftpd/update_ftpusers.sh:/usr/sbin/update_ftpusers.sh
         - ./vsftpd/files/100006:/var/ftp/pub/10.5524/100001_101000/100006
         - ./vsftpd/files/100020:/var/ftp/pub/10.5524/100001_101000/100020
@@ -103,7 +103,7 @@ services:
       volumes_from:
         - app
       volumes:
-        - ${DATA_SAVE_PATH}/yii:${YII_PATH}
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/yii:${YII_PATH}
       depends_on:
         - app
       command: /var/www/protected/yiic lesscompiler
@@ -205,7 +205,7 @@ services:
         - app
       volumes:
         - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
-        - ${DATA_SAVE_PATH}/yii:${YII_PATH}
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/yii:${YII_PATH}
       expose:
         - "9000"
       depends_on:
@@ -222,7 +222,7 @@ services:
     postgres:
       build: ./postgres
       volumes:
-        - ${DATA_SAVE_PATH}/postgres:/var/lib/postgresql
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/postgres:/var/lib/postgresql
         - ${APPLICATION}/sql/gigadb_testdata.sql:/docker-entrypoint-initdb.d/1-gigadb_testdata.sql
         - ${APPLICATION}/sql/ftpusers_testdata.sql:/docker-entrypoint-initdb.d/2-ftpusers_testdata.sql
       ports:
@@ -274,7 +274,7 @@ services:
         - app
       volumes:
         - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
-        - ${DATA_SAVE_PATH}/nginx/sites-available:/etc/nginx/sites-available
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/nginx/sites-available:/etc/nginx/sites-available
       ports:
         - "${NGINX_HOST_HTTP_PORT}:80"
         - "${NGINX_HOST_HTTPS_PORT}:443"
@@ -293,7 +293,7 @@ services:
       ports:
         - "5050:5050"
       volumes:
-        - ${DATA_SAVE_PATH}/pgadmin-backup:/var/lib/pgadmin/storage/pgadmin4
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/pgadmin-backup:/var/lib/pgadmin/storage/pgadmin4
       depends_on:
         - postgres
       networks:
@@ -371,8 +371,8 @@ services:
     minio:
       build: ./minio
       volumes:
-        - ${DATA_SAVE_PATH}/minio/data:/export
-        - ${DATA_SAVE_PATH}/minio/config:/root/.minio
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/minio/data:/export
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/minio/config:/root/.minio
       ports:
         - "${MINIO_PORT}:9000"
       environment:
@@ -396,7 +396,7 @@ services:
         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
         - TZ=${WORKSPACE_TIMEZONE}
       volumes:
-        - ${DATA_SAVE_PATH}/mysql:/var/lib/mysql
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/mysql:/var/lib/mysql
         - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
       ports:
         - "${MYSQL_PORT}:3306"
@@ -414,7 +414,7 @@ services:
         - MYSQL_PASSWORD=${PERCONA_PASSWORD}
         - MYSQL_ROOT_PASSWORD=${PERCONA_ROOT_PASSWORD}
       volumes:
-        - ${DATA_SAVE_PATH}/percona:/var/lib/mysql
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/percona:/var/lib/mysql
         - ${PERCONA_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
       ports:
         - "${PERCONA_PORT}:3306"
@@ -431,7 +431,7 @@ services:
         - SA_PASSWORD=${MSSQL_PASSWORD}
         - ACCEPT_EULA=Y
       volumes:
-        - ${DATA_SAVE_PATH}/mssql:/var/opt/mssql
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/mssql:/var/opt/mssql
       ports:
         - "${MSSQL_PORT}:1433"
       networks:
@@ -442,7 +442,7 @@ services:
     mariadb:
       build: ./mariadb
       volumes:
-        - ${DATA_SAVE_PATH}/mariadb:/var/lib/mysql
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/mariadb:/var/lib/mysql
         - ${MARIADB_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
       ports:
         - "${MARIADB_PORT}:3306"
@@ -459,7 +459,7 @@ services:
     postgres-postgis:
       build: ./postgres-postgis
       volumes:
-        - ${DATA_SAVE_PATH}/postgres:/var/lib/postgresql/data
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/postgres:/var/lib/postgresql/data
       ports:
         - "${POSTGRES_PORT}:5432"
       environment:
@@ -479,7 +479,7 @@ services:
       environment:
         - NEO4J_AUTH=default:secret
       volumes:
-        - ${DATA_SAVE_PATH}/neo4j:/var/lib/neo4j/data
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/neo4j:/var/lib/neo4j/data
       networks:
         - backend
 
@@ -490,7 +490,7 @@ services:
       ports:
         - "${MONGODB_PORT}:27017"
       volumes:
-        - ${DATA_SAVE_PATH}/mongo:/data/db
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/mongo:/data/db
       networks:
         - backend
 
@@ -501,7 +501,7 @@ services:
       ports:
         - "${RETHINKDB_PORT}:8080"
       volumes:
-        - ${DATA_SAVE_PATH}/rethinkdb:/data/rethinkdb_data
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/rethinkdb:/data/rethinkdb_data
       networks:
         - backend
 
@@ -512,7 +512,7 @@ services:
       volumes_from:
         - workspace
       volumes:
-        - ${DATA_SAVE_PATH}/aerospike:/opt/aerospike/data
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/aerospike:/opt/aerospike/data
       ports:
         - "${AEROSPIKE_SERVICE_PORT}:3000"
         - "${AEROSPIKE_FABRIC_PORT}:3001"
@@ -526,7 +526,7 @@ services:
     memcached:
       build: ./memcached
       volumes:
-        - ${DATA_SAVE_PATH}/memcached:/var/lib/memcached
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/memcached:/var/lib/memcached
       ports:
         - "${MEMCACHED_HOST_PORT}:11211"
       depends_on:
@@ -771,7 +771,7 @@ services:
       build:
         context: ./grafana
       volumes:
-        - ${DATA_SAVE_PATH}/grafana:/var/lib/grafana
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/grafana:/var/lib/grafana
       ports:
         - "${GRAFANA_PORT}:3000"
       networks:
