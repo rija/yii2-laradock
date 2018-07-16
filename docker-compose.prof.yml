@@ -1,0 +1,71 @@
+version: "2"
+
+services:
+
+### Profiling the web application #############################
+
+    xhgui:
+      image: edyan/xhgui
+      volumes:
+        - ./xhgui/config.php:/usr/local/src/xhgui/config/config.php
+      ports:
+        - "8888:80"
+        - "27017:27017"
+      networks:
+        - backend
+
+    php-prof:
+      build:
+        context: ./php-xhprof
+      depends_on:
+        - xhgui
+      volumes_from:
+        - xhgui
+        - app
+      volumes:
+        - ./php-xhprof/php.ini:/usr/local/etc/php/php.ini
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/yii:${YII_PATH}
+      expose:
+        - "9000"
+      extra_hosts:
+        - "dockerhost:${DOCKER_HOST_IP}"
+      environment:
+        - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+      networks:
+        - backend
+
+    nginx-prof:
+      build:
+        context: ./nginx
+        args:
+          - PHP_UPSTREAM_CONTAINER=php-prof
+      volumes_from:
+        - app
+      volumes:
+        - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/nginx/sites-available:/etc/nginx/sites-available
+      ports:
+        - "${NGINX_HOST_HTTP_PORT}:80"
+        - "${NGINX_HOST_HTTPS_PORT}:443"
+      depends_on:
+        - php-prof
+      networks:
+        - backend
+      dns:
+        - 8.8.8.8
+        - 9.9.9.9
+
+    ### Applications Code Initializer #############################
+    init-prof:
+      image: php:5.6-cli
+      volumes_from:
+        - app
+      volumes:
+        - ${DATA_SAVE_PATH}/${COMPOSE_PROJECT_NAME}/yii:${YII_PATH}
+      depends_on:
+        - app
+        - xhgui
+        - nginx-prof
+        - php-prof
+        - postgres
+      command: /var/www/protected/yiic lesscompiler
